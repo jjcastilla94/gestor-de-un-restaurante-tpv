@@ -1,0 +1,25 @@
+/* Estilos de la barra de progreso */
+.progress-bar {
+    -fx-pref-height: 20px; /* Ajusta la altura de la barra de progreso */
+    -fx-pref-width: 300px; /* Ajusta el ancho de la barra de progreso */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0.0, 0, 2); /* Sombra */
+}
+.progress-bar .track {
+    -fx-background-color: rgba(255, 255, 255, 0.3); /* Fondo ligeramente transparente */
+    background-color: rgba(255, 255, 255, 0.3); /* Fondo ligeramente transparente para compatibilidad */
+    -fx-background-radius: 10px; /* Bordes redondeados */
+    -fx-border-color: #ccc; /* Borde gris claro */
+    border-color: #ccc; /* Borde gris claro para compatibilidad */
+    -fx-border-width: 1px;
+    border-width: 1px; /* Borde ancho para compatibilidad */
+    -fx-border-radius: 10px;
+    border-radius: 10px; /* Bordes redondeados para compatibilidad */
+}
+
+.progress-bar .bar {
+    -fx-background-color: linear-gradient(to right, #1e5799, #2989d8); /* Degradado de azul a morado */
+    background-color: #1e5799; /* Color de fondo para compatibilidad */
+    -fx-background-radius: 10px; /* Bordes redondeados */
+    -fx-transition: -fx-pref-width 0.3s ease-in-out; /* Transición de la anchura */
+    transition: width 0.3s ease-in-out;
+}

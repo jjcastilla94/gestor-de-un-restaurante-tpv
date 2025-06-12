@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="870.0" prefWidth="1301.0" style="-fx-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; -fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.PrimaryController">
+
+    <!-- CABECERA -->
+    <top>
+        <HBox alignment="CENTER_LEFT" prefHeight="41.0" prefWidth="1163.0" spacing="20" style="-fx-background-color: linear-gradient(to right, #1e5799, #2989d8); -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 10, 0, 0, 3);">
+            <padding>
+                <Insets bottom="10" left="20" right="20" top="10" />
+            </padding>
+            
+            <!-- Logo del bar -->
+            <ImageView fitHeight="40" fitWidth="40" onMouseClicked="#actualizar" preserveRatio="true">
+                <image>
+                    <Image url="@images/logo.png" />
+                </image>
+            </ImageView>
+            
+            <VBox alignment="CENTER_LEFT">
+                <Label style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: white;" text="MAX AND HENRY TPV" />
+                <Label style="-fx-font-size: 13px; -fx-text-fill: #ecf0f1;" text="Sistema Avanzado de Gestión Especializados en Cañas" />
+            </VBox>
+            
+            <Region prefHeight="45.0" prefWidth="474.0" HBox.hgrow="ALWAYS" />
+            
+            <!-- Información de sesión -->
+            <HBox alignment="CENTER" spacing="15">
+                <HBox alignment="CENTER" prefHeight="45.0" prefWidth="150.0" spacing="5">
+                    <ImageView fitHeight="16" fitWidth="16" preserveRatio="true">
+                        <image>
+                            <Image url="@images/reloj.png" />
+                        </image>
+                    </ImageView>
+                    <Label fx:id="lblFechaHora" style="-fx-font-size: 13px; -fx-text-fill: #ecf0f1;" text="21/05/2025, 22:50" />
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="45.0" prefWidth="148.0" spacing="5">
+                    <ImageView fitHeight="16" fitWidth="16" preserveRatio="true">
+                        <image>
+                            <Image url="@images/perfil.png" />
+                        </image>
+                    </ImageView>
+                    <Label style="-fx-font-size: 13px; -fx-text-fill: #ecf0f1;" text="Cajero:" />
+                    <Label fx:id="lblCajero" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #ecf0f1;" text="Usuario" />
+                </HBox>
+            <ImageView fitHeight="36.0" fitWidth="36.0" onMouseClicked="#logOut" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/icons8-salida-50.png" />
+               </image>
+            </ImageView>
+            </HBox>
+        </HBox>
+    </top>
+    
+    <!-- CONTENIDO PRINCIPAL -->
+    <center>
+        <SplitPane dividerPositions="0.6166666666666667" style="-fx-background-color: transparent; -fx-padding: 0; -fx-background-insets: 0;">
+            
+            <!-- Panel izquierdo: Categorías y productos -->
+            <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 15px;">
+                <!-- Categorías -->
+                <VBox spacing="10">
+                    <HBox alignment="CENTER_LEFT" spacing="5">
+                        <ImageView fitHeight="20" fitWidth="20" preserveRatio="true">
+                            <image>
+                                <Image url="@images/productos.png" />
+                            </image>
+                        </ImageView>
+                        <Label style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="PRODUCTOS">
+                     <font>
+                        <Font size="13.0" />
+                     </font></Label>
+                    </HBox>
+                    
+                    <!-- Buscador de productos -->
+                    <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 10 0 5 0;">
+                        <TextField fx:id="txtBusqueda" onAction="#buscarProducto" prefHeight="36.0" promptText="🔍Buscar producto..." style="-fx-background-color: white; -fx-border-color: #dee2e6; -fx-border-radius: 5px; -fx-padding: 8px; -fx-font-size: 13px;" HBox.hgrow="ALWAYS">
+                            
+                        </TextField>
+                    </HBox>
+                </VBox>
+                
+                <!-- Productos -->
+                <VBox spacing="10" VBox.vgrow="ALWAYS">
+                    <HBox alignment="CENTER_LEFT" spacing="5">
+                        <ImageView fitHeight="20" fitWidth="20" preserveRatio="true">
+                            <image>
+                                <Image url="@images/categorias.png" />
+                            </image>
+                        </ImageView>
+                        <Label style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="CATEGORÍAS" />
+                        
+                        <Region HBox.hgrow="ALWAYS" />
+                    </HBox>
+               <VBox prefHeight="601.0" prefWidth="769.0">
+                  <children>
+                     <TabPane prefHeight="627.0" prefWidth="769.0" tabClosingPolicy="UNAVAILABLE">
+                       <tabs>
+                         <Tab text="    BEBIDAS    ">
+                              <content>
+                                    <VBox prefHeight="786.0" prefWidth="1081.0" style="-fx-background-color: white;" VBox.vgrow="ALWAYS">
+
+                                        <children>
+                                            <FlowPane fx:id="productosContainer" hgap="15" prefHeight="546.0" prefWidth="769.0" prefWrapLength="800" style="-fx-padding: 20px;" vgap="15" VBox.vgrow="ALWAYS" />
+                                        </children>
+                                    </VBox>
+                              </content>
+                         </Tab>
+                         <Tab text="    ENTRANTES    ">
+                           <content>
+                                    <VBox prefHeight="786.0" prefWidth="1081.0" style="-fx-background-color: white;" VBox.vgrow="ALWAYS">
+
+                                        <children>
+                                            <FlowPane fx:id="productosContainer2" hgap="15" prefWrapLength="800" style="-fx-padding: 20px;" vgap="15" VBox.vgrow="ALWAYS" />
+                                        </children>
+                                    </VBox>
+                           </content>
+                         </Tab>
+                           <Tab text="    PRIMER PLATO    ">
+                             <content>
+                                    <VBox prefHeight="786.0" prefWidth="1081.0" style="-fx-background-color: white;" VBox.vgrow="ALWAYS">
+
+                                        <children>
+                                            <FlowPane fx:id="productosContainer3" hgap="15" prefWrapLength="800" style="-fx-padding: 20px;" vgap="15" VBox.vgrow="ALWAYS" />
+                                        </children>
+                                    </VBox>
+                             </content>
+                           </Tab>
+                           <Tab text="    SEGUNDO PLATO    ">
+                             <content>
+                                    <VBox prefHeight="786.0" prefWidth="1081.0" style="-fx-background-color: white;" VBox.vgrow="ALWAYS">
+
+                                        <children>
+                                            <FlowPane fx:id="productosContainer4" hgap="15" prefWrapLength="800" style="-fx-padding: 20px;" vgap="15" VBox.vgrow="ALWAYS" />
+                                        </children>
+                                    </VBox>
+                             </content>
+                           </Tab>
+                           <Tab text="    POSTRES    ">
+                             <content>
+                                    <VBox prefHeight="786.0" prefWidth="1081.0" style="-fx-background-color: white;" VBox.vgrow="ALWAYS">
+
+                                        <children>
+                                            <FlowPane fx:id="productosContainer5" hgap="15" prefWrapLength="800" style="-fx-padding: 20px;" vgap="15" VBox.vgrow="ALWAYS" />
+                                        </children>
+                                    </VBox>
+                             </content>
+                           </Tab>
+                           <Tab text="    CAFÉS    ">
+                             <content>
+                                    <VBox prefHeight="786.0" prefWidth="1081.0" style="-fx-background-color: white;" VBox.vgrow="ALWAYS">
+
+                                        <children>
+                                            <FlowPane fx:id="productosContainer6" hgap="15" prefWrapLength="800" style="-fx-padding: 20px;" vgap="15" VBox.vgrow="ALWAYS" />
+                                        </children>
+                                    </VBox>
+                             </content>
+                           </Tab>
+                       </tabs>
+                     </TabPane>
+                  </children>
+               </VBox>
+                </VBox>
+            <HBox alignment="CENTER" prefHeight="42.0" prefWidth="707.0" spacing="10" style="-fx-padding: 15 0 0 0;">
+               <children>
+                  <Button fx:id="btnAnadir" onAction="#abrirVentanaEmergenteAdd" style="-fx-background-color:rgb(53, 220, 92); -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 13px; -fx-padding: 10px 0; -fx-background-radius: 5px; -fx-cursor: hand; -fx-pref-width: 90px;" text="Añadir">
+                     <graphic>
+                        <ImageView fitHeight="18" fitWidth="18">
+                           <image>
+                              <Image url="@images/nuevo.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="btnModificar" onAction="#abrirVentanaEmergenteMod" style="-fx-background-color:rgb(220, 198, 53); -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 13px; -fx-padding: 10px 0; -fx-background-radius: 5px; -fx-cursor: hand; -fx-pref-width: 90px;" text="Modificar">
+                     <graphic>
+                        <ImageView fitHeight="18" fitWidth="18">
+                           <image>
+                              <Image url="@images/mod.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="btnBorrar" onAction="#borrarProducto" style="-fx-background-color:rgb(220, 53, 84); -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 13px; -fx-padding: 10px 0; -fx-background-radius: 5px; -fx-cursor: hand; -fx-pref-width: 90px;" text="Borrar">
+                     <graphic>
+                        <ImageView fitHeight="18" fitWidth="18">
+                           <image>
+                              <Image url="@images/eliminar.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
+            </VBox>
+            
+            <!-- Panel derecho: Ticket y totales -->
+            <VBox prefHeight="710.0" prefWidth="482.0" style="-fx-background-color: #183153; -fx-padding: 15;">
+                <!-- Título del ticket con iconos de acción -->
+                <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 0 0 15 0;">
+                    <StackPane>
+                        <ImageView fitHeight="30" fitWidth="30">
+                            <image>
+                                <Image url="@images/ticket.png" />
+                            </image>
+                        </ImageView>
+                    </StackPane>
+                    <Label prefHeight="23.0" prefWidth="87.0" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;" text="TICKET" />
+                    
+                    <Region HBox.hgrow="ALWAYS" />
+                    
+                    <Button fx:id="btnNuevo" onAction="#anadirATicket" style="-fx-background-color: #194083; -fx-text-fill: white; -fx-font-size: 12px; -fx-padding: 6px 12px; -fx-background-radius: 4px; -fx-cursor: hand; -fx-border-color: #2a5db0; -fx-border-radius: 4px;" text="Nuevo">
+                        <graphic>
+                            <ImageView fitHeight="16" fitWidth="16">
+                                <image>
+                                    <Image url="@images/nuevo.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                    <Button fx:id="btnGuardar" onAction="#generarPDF" style="-fx-background-color: #194083; -fx-text-fill: white; -fx-font-size: 12px; -fx-padding: 6px 12px; -fx-background-radius: 4px; -fx-cursor: hand; -fx-border-color: #2a5db0; -fx-border-radius: 4px;" text="Guardar">
+                        <graphic>
+                            <ImageView fitHeight="16" fitWidth="16">
+                                <image>
+                                    <Image url="@images/guardar.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                    <Button fx:id="btnMasDetalles" onAction="#abrirVentanaEmergenteDetalles" style="-fx-background-color: #194083; -fx-text-fill: white; -fx-font-size: 12px; -fx-padding: 6px 12px; -fx-background-radius: 4px; -fx-cursor: hand; -fx-border-color: #2a5db0; -fx-border-radius: 4px;" text="Ver Mas">
+                        <graphic>
+                            <ImageView fitHeight="16" fitWidth="16">
+                                <image>
+                                    <Image url="@images/vermas.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                </HBox>
+                
+                <!-- Selector de mesa -->
+                <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 0 0 15 0;">
+                    <Label style="-fx-font-size: 14px; -fx-text-fill: white; -fx-font-weight: bold;" text="Mesa:" />
+                    <ComboBox fx:id="comboMesas" prefWidth="200" promptText="Seleccionar..." style="-fx-background-color: white; -fx-font-size: 13px; -fx-background-radius: 5px;" />
+               <ImageView fitHeight="26.0" fitWidth="35.0" onMouseClicked="#modificarTicket" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@images/mod.png" />
+                  </image>
+                  <HBox.margin>
+                     <Insets left="15.0" />
+                  </HBox.margin>
+               </ImageView>
+                </HBox>
+                
+                <!-- Tabla de productos en el ticket -->
+                <TableView fx:id="tablaComandas" style="-fx-background-color: #f8f9fa; -fx-background-radius: 5px; -fx-font-size: 13px;" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colCantidad" prefWidth="88.0" style="-fx-alignment: center;" text="Cant." />
+                        <TableColumn fx:id="colNombre" prefWidth="146.0" style="-fx-alignment: center-left;" text="Producto" />
+                        <TableColumn fx:id="colPrecioUnidad" prefWidth="99.0" style="-fx-alignment: center-right;" text="P.U." />
+                        <TableColumn fx:id="colTotal" prefWidth="93.0" style="-fx-alignment: center-right;" text="Total" />
+                    </columns>
+                    <placeholder>
+                        <Label style="-fx-text-fill: #6c757d;" text="No hay productos en el ticket" />
+                    </placeholder>
+                </TableView>
+                
+                <!-- Totales -->
+                <VBox spacing="10" style="-fx-padding: 15 0 0 0;">
+                    <GridPane hgap="10" vgap="5">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="ALWAYS" />
+                            <ColumnConstraints halignment="RIGHT" hgrow="NEVER" />
+                        </columnConstraints>
+                        
+                        <Label style="-fx-font-size: 13px; -fx-text-fill: #b0b8c9;" text="SUBTOTAL:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <Label fx:id="lblSubtotal" style="-fx-font-size: 13px; -fx-text-fill: white; -fx-font-weight: bold;" text="0,00€" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        
+                        <Label style="-fx-font-size: 13px; -fx-text-fill: #b0b8c9;" text="IVA (21%):" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <Label fx:id="lblIva" style="-fx-font-size: 13px; -fx-text-fill: white; -fx-font-weight: bold;" text="0,00€" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        
+                        <Separator style="-fx-background-color: transparent; -fx-padding: 5 0;" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                        
+                        <Label style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: white;" text="TOTAL:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                        <Label fx:id="lblTotal" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #5cdb95;" text="0,00€" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <rowConstraints>
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                  </rowConstraints>
+                    </GridPane>
+                    
+                    <!-- Botones de acción -->
+                    <HBox alignment="CENTER" spacing="10" style="-fx-padding: 15 0 0 0;">
+                        <Button fx:id="btnEliminar" onAction="#eliminarDelTicket" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 13px; -fx-padding: 10px 0; -fx-background-radius: 5px; -fx-cursor: hand; -fx-pref-width: 90px;" text="Eliminar">
+                            <graphic>
+                                <ImageView fitHeight="18" fitWidth="18">
+                                    <image>
+                                        <Image url="@images/eliminar.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button fx:id="btnDescuento" onAction="#abrirVentanaEmergentePorcentaje" style="-fx-background-color: #fd7e14; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 13px; -fx-padding: 10px 0; -fx-background-radius: 5px; -fx-cursor: hand; -fx-pref-width: 110px;" text="Descuento">
+                            <graphic>
+                                <ImageView fitHeight="18" fitWidth="18">
+                                    <image>
+                                        <Image url="@images/descuento.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button fx:id="btnCobrar" onAction="#abrirVentanaEmergenteCobrar" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 15px; -fx-padding: 10px 0; -fx-background-radius: 5px; -fx-cursor: hand; -fx-pref-width: 120px;" text="COBRAR">
+                            <graphic>
+                                <ImageView fitHeight="20" fitWidth="20">
+                                    <image>
+                                        <Image url="@images/cobrar.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                    </HBox>
+                </VBox>
+            </VBox>
+        </SplitPane>
+    </center>
+    
+    <!-- BARRA DE ESTADO -->
+    <bottom>
+        <HBox alignment="CENTER_LEFT" style="-fx-background-color: #2c3e50; -fx-text-fill: white; -fx-padding: 5px;">
+            <padding>
+                <Insets bottom="5" left="10" right="10" top="5" />
+            </padding>
+            <HBox alignment="CENTER" spacing="5">
+                <ImageView fitHeight="10" fitWidth="10">
+                    <image>
+                        <Image url="@images/logo.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="lblEstado" style="-fx-text-fill: #b0b8c9; -fx-font-size: 12px;" text="Sistema listo" />
+            </HBox>
+            <Region HBox.hgrow="ALWAYS" />
+            <Label style="-fx-text-fill: #b0b8c9; -fx-font-size: 12px;" text="GASTRO TPV © 2025 - Todos los derechos reservados" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label fx:id="lblVersion" style="-fx-text-fill: #b0b8c9; -fx-font-size: 12px;" text="v2.0.0" />
+        </HBox>
+    </bottom>
+    
+</BorderPane>
