@@ -217,6 +217,14 @@ SELECT id_producto
 FROM comanda
 WHERE id_mesa = 1;
 
+
+SELECT user, host, plugin 
+FROM mysql.user 
+WHERE user = 'tpv_app';
+
+SELECT *
+FROM usuario_actual ;
+
 SELECT c.id, cp.cantidad, p.nombre, p.precio, (p.precio * cp.cantidad) AS total
 FROM comanda c
 JOIN comanda_producto cp ON c.id = cp.id_comanda

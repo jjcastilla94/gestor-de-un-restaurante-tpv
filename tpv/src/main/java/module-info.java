@@ -2,7 +2,6 @@ module com.example {
     requires javafx.controls;
     requires javafx.fxml;
     //requires java.sql;
-    requires mysql.connector.java;
     requires transitive javafx.base;
     requires transitive javafx.graphics;
     requires transitive java.sql;
