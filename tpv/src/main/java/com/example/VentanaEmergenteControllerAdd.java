@@ -18,10 +18,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Controlador para la ventana emergente de añadir producto.
+ * Controlador para la ventana emergente de aÃ±adir producto.
  * Permite seleccionar imagen, introducir datos y guardar un nuevo producto en la base de datos.
  * 
- * Gestiona la carga de categorías, la selección de imagen y la validación de datos antes de guardar.
+ * Gestiona la carga de categorÃ­as, la selecciÃ³n de imagen y la validaciÃ³n de datos antes de guardar.
  * 
  * @author Castilla
  */
@@ -30,7 +30,7 @@ public class VentanaEmergenteControllerAdd {
     private PrimaryController controladorPrincipal;
 
     /**
-     * Establece el controlador principal para poder actualizar la vista principal tras añadir un producto.
+     * Establece el controlador principal para poder actualizar la vista principal tras aÃ±adir un producto.
      * @param controladorPrincipal Controlador principal.
      */
     public void setControladorPrincipal(PrimaryController controladorPrincipal) {
@@ -46,12 +46,12 @@ public class VentanaEmergenteControllerAdd {
     private Map<String, Integer> categoriaNombreToId = new HashMap<>();
 
     /**
-     * Inicializa la ventana emergente, cargando las categorías desde la base de datos.
+     * Inicializa la ventana emergente, cargando las categorÃ­as desde la base de datos.
      */
     @FXML
     private void initialize() {
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto_final", "root", "root");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/proyecto_final", "tpv_app", "tpv_app_123");
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT id, nombre FROM categoria");
 
@@ -68,14 +68,14 @@ public class VentanaEmergenteControllerAdd {
 
     /**
      * Abre un selector de archivos para elegir una imagen y la muestra como fondo en el componente.
-     * @param event Evento de ratón.
+     * @param event Evento de ratÃ³n.
      */
     @FXML 
     private void seleccionarImagen(MouseEvent event) {
         // Obtener la ruta absoluta de la carpeta "images" dentro de resources
         File initialDirectory;
         try {
-            // Busca la carpeta "images" dentro de resources, independientemente de dónde se ejecute el jar/proyecto
+            // Busca la carpeta "images" dentro de resources, independientemente de dÃ³nde se ejecute el jar/proyecto
             initialDirectory = new File(getClass().getResource("/com/example/images").toURI());
         } catch (Exception e) {
             // Si no se encuentra, usar una ruta relativa como fallback
@@ -85,7 +85,7 @@ public class VentanaEmergenteControllerAdd {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleccionar Imagen");
         fileChooser.getExtensionFilters().addAll(
-            new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg")
+            new FileChooser.ExtensionFilter("ImÃ¡genes", "*.png", "*.jpg", "*.jpeg")
         );
         if (initialDirectory.exists()) {
             fileChooser.setInitialDirectory(initialDirectory);
@@ -93,7 +93,7 @@ public class VentanaEmergenteControllerAdd {
 
         File selectedFile = fileChooser.showOpenDialog(customFileUpload.getScene().getWindow());
         if (selectedFile != null) {
-            // Solo guardar el nombre y la extensión del archivo
+            // Solo guardar el nombre y la extensiÃ³n del archivo
             rutaImagenSeleccionada = selectedFile.getName();
 
             // Cambiar el estilo del componente para indicar que se ha seleccionado un archivo 
@@ -102,7 +102,7 @@ public class VentanaEmergenteControllerAdd {
     }
 
     /**
-     * Añade un nuevo producto a la base de datos tras validar los campos.
+     * AÃ±ade un nuevo producto a la base de datos tras validar los campos.
      * Muestra alertas si hay errores o si el producto ya existe.
      */
     @FXML
@@ -112,13 +112,13 @@ public class VentanaEmergenteControllerAdd {
         String fotografia = rutaImagenSeleccionada;
         String nombreCategoriaSeleccionada = choice_box_categoria.getValue();
 
-        // Obtener el id real de la categoría seleccionada
+        // Obtener el id real de la categorÃ­a seleccionada
         Integer idCategoria = categoriaNombreToId.get(nombreCategoriaSeleccionada);
 
         try {
             String precioStr = txtPrecio.getText().trim();
             if (precioStr.isEmpty()) {
-                mostrarAlerta("Error", "El campo precio no puede estar vacío.");
+                mostrarAlerta("Error", "El campo precio no puede estar vacÃ­o.");
                 return;
             }
             if (nombre == null || nombre.trim().isEmpty() || precio == null || precio <= 0 || fotografia == null || fotografia.trim().isEmpty() || idCategoria == null) {
@@ -131,7 +131,7 @@ public class VentanaEmergenteControllerAdd {
                 "SELECT * FROM producto WHERE nombre='" + nombre + "'"
             );
             if (rs.next()) {
-                mostrarAlerta("Error", "El producto ya está registrado.");
+                mostrarAlerta("Error", "El producto ya estÃ¡ registrado.");
                 return;
             } else {
                 int id = Producto.getLastId() + 1;
@@ -150,8 +150,8 @@ public class VentanaEmergenteControllerAdd {
     }
 
     /**
-     * Muestra una alerta de error con el título y mensaje proporcionados.
-     * @param titulo Título de la alerta.
+     * Muestra una alerta de error con el tÃ­tulo y mensaje proporcionados.
+     * @param titulo TÃ­tulo de la alerta.
      * @param mensaje Mensaje de la alerta.
      */
     private void mostrarAlerta(String titulo, String mensaje) {

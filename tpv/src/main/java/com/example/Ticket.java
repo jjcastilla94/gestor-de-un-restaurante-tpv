@@ -7,32 +7,32 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 /**
  * Clase Ticket que representa un ticket de venta en el sistema TPV.
- * Contiene información sobre la mesa, fecha y hora, precio, método de pago y empleado asociado.
+ * Contiene informaciÃ³n sobre la mesa, fecha y hora, precio, mÃ©todo de pago y empleado asociado.
  */
 public class Ticket {
     
-    /** Identificador único del ticket */
+    /** Identificador Ãºnico del ticket */
     private IntegerProperty id;
     /** Identificador de la mesa asociada al ticket */
     private IntegerProperty id_mesa;
-    /** Fecha y hora en la que se generó el ticket */
+    /** Fecha y hora en la que se generÃ³ el ticket */
     private StringProperty fecha_hora;
     /** Precio total del ticket */
     private StringProperty precio;
-    /** Identificador del método de pago utilizado */
+    /** Identificador del mÃ©todo de pago utilizado */
     private IntegerProperty id_metodo_pago;
-    /** Identificador del empleado que realizó el cobro */
+    /** Identificador del empleado que realizÃ³ el cobro */
     private IntegerProperty id_empleado;
 
     /**
      * Constructor de la clase Ticket.
      * 
-     * @param id Identificador único del ticket
+     * @param id Identificador Ãºnico del ticket
      * @param id_mesa Identificador de la mesa
      * @param fecha_hora Fecha y hora del ticket
      * @param precio Precio total del ticket
-     * @param id_metodo_pago Identificador del método de pago
-     * @param id_empleado Identificador del empleado que realizó el cobro
+     * @param id_metodo_pago Identificador del mÃ©todo de pago
+     * @param id_empleado Identificador del empleado que realizÃ³ el cobro
      */
     public Ticket(int id, int id_mesa, String fecha_hora, String precio, int id_metodo_pago, int id_empleado) {
         this.id = new SimpleIntegerProperty(id);
@@ -115,17 +115,17 @@ public class Ticket {
         this.precio.set(precio);
     }
 
-    /** @return id del método de pago */
+    /** @return id del mÃ©todo de pago */
     public int getIdMetodoPago() {
         return id_metodo_pago.get();
     }
 
-    /** @param id_metodo_pago Nuevo id del método de pago */
+    /** @param id_metodo_pago Nuevo id del mÃ©todo de pago */
     public void setIdMetodoPago(int id_metodo_pago) {
         this.id_metodo_pago.set(id_metodo_pago);
     }
 
-    /** @return id del empleado que realizó el cobro */
+    /** @return id del empleado que realizÃ³ el cobro */
     public int getIdEmpleado() {
         return id_empleado.get();
     }

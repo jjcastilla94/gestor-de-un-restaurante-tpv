@@ -13,8 +13,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 /**
- * Clase que representa una categoría de productos.
- * Permite la gestión de categorías en la base de datos.
+ * Clase que representa una categorÃ­a de productos.
+ * Permite la gestiÃ³n de categorÃ­as en la base de datos.
  * 
  * @author Castilla
  */
@@ -23,9 +23,9 @@ public class Categoria {
     private StringProperty nombre;
 
     /**
-     * Crea una nueva categoría.
-     * @param id Identificador de la categoría.
-     * @param nombre Nombre de la categoría.
+     * Crea una nueva categorÃ­a.
+     * @param id Identificador de la categorÃ­a.
+     * @param nombre Nombre de la categorÃ­a.
      */
     public Categoria(int id, String nombre) {
         this.id = new SimpleIntegerProperty(id);
@@ -49,15 +49,15 @@ public class Categoria {
     }
 
     /**
-     * Obtiene el id de la categoría.
-     * @return id de la categoría.
+     * Obtiene el id de la categorÃ­a.
+     * @return id de la categorÃ­a.
      */
     public int getId() {
         return id.get();
     }
 
     /**
-     * Establece el id de la categoría.
+     * Establece el id de la categorÃ­a.
      * @param id Nuevo id.
      */
     public void setId(int id) {
@@ -65,15 +65,15 @@ public class Categoria {
     }
 
     /**
-     * Obtiene el nombre de la categoría.
-     * @return nombre de la categoría.
+     * Obtiene el nombre de la categorÃ­a.
+     * @return nombre de la categorÃ­a.
      */
     public String getNombre() {
         return nombre.get();
     }
 
     /**
-     * Establece el nombre de la categoría.
+     * Establece el nombre de la categorÃ­a.
      * @param nombre Nuevo nombre.
      */
     public void setNombre(String nombre) {
@@ -81,9 +81,9 @@ public class Categoria {
     }
 
     /**
-     * Obtiene el nombre de la categoría a partir de su id.
-     * @param id Id de la categoría.
-     * @return Nombre de la categoría o null si no existe.
+     * Obtiene el nombre de la categorÃ­a a partir de su id.
+     * @param id Id de la categorÃ­a.
+     * @return Nombre de la categorÃ­a o null si no existe.
      */
     public static String getNombreById(int id) {
         String nombre = null;
@@ -105,8 +105,8 @@ public class Categoria {
     }
 
     /**
-     * Obtiene todas las categorías de la base de datos y las añade a la lista proporcionada.
-     * @param listaCategorias Lista donde se añadirán las categorías.
+     * Obtiene todas las categorÃ­as de la base de datos y las aÃ±ade a la lista proporcionada.
+     * @param listaCategorias Lista donde se aÃ±adirÃ¡n las categorÃ­as.
      */
     public static void getAll(ObservableList<Categoria> listaCategorias) {
         try {
@@ -126,8 +126,8 @@ public class Categoria {
     }
 
     /**
-     * Obtiene una categoría por su id.
-     * @param id Id de la categoría.
+     * Obtiene una categorÃ­a por su id.
+     * @param id Id de la categorÃ­a.
      * @return Objeto Categoria o null si no existe.
      */
     public static Categoria get(int id) {
@@ -150,8 +150,8 @@ public class Categoria {
     }
 
     /**
-     * Obtiene el último id registrado en la tabla categoria.
-     * @return Último id o 0 si no hay registros.
+     * Obtiene el Ãºltimo id registrado en la tabla categoria.
+     * @return Ãšltimo id o 0 si no hay registros.
      */
     public static int getLastId() {
         int lastId = 0;
@@ -173,9 +173,9 @@ public class Categoria {
     }
 
     /**
-     * Guarda la categoría en la base de datos.
+     * Guarda la categorÃ­a en la base de datos.
      * Si existe, la actualiza; si no, la inserta.
-     * @return Número de filas afectadas.
+     * @return NÃºmero de filas afectadas.
      */
     public int save() {
         int filasAfectadas = 0;
@@ -184,10 +184,10 @@ public class Categoria {
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM categoria WHERE id=" + this.getId());
             if (rs.next()) {
-                // Si la categoría ya existe, la modificamos
+                // Si la categorÃ­a ya existe, la modificamos
                 filasAfectadas = st.executeUpdate("UPDATE categoria SET nombre='" + this.getNombre() + "' WHERE id=" + this.getId());
             } else {
-                // Si la categoría no existe, la añadimos
+                // Si la categorÃ­a no existe, la aÃ±adimos
                 filasAfectadas = st.executeUpdate("INSERT INTO categoria (nombre, descripcion) VALUES ('" + this.getNombre() + "')");
             }
 
@@ -200,8 +200,8 @@ public class Categoria {
     }
 
     /**
-     * Elimina la categoría de la base de datos.
-     * @return Número de filas afectadas.
+     * Elimina la categorÃ­a de la base de datos.
+     * @return NÃºmero de filas afectadas.
      */
     public int delete() {
         int filasAfectadas = 0;
@@ -218,7 +218,7 @@ public class Categoria {
     }
 
     /**
-     * Muestra un mensaje de error genérico.
+     * Muestra un mensaje de error genÃ©rico.
      */
     public static void mensajeError() {
         Alert alert = new Alert(AlertType.ERROR);
@@ -227,14 +227,14 @@ public class Categoria {
     }
 
     /**
-     * Obtiene una conexión a la base de datos.
-     * @return Objeto Connection o null si falla la conexión.
+     * Obtiene una conexiÃ³n a la base de datos.
+     * @return Objeto Connection o null si falla la conexiÃ³n.
      */
     public static Connection getConnection() {
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto_final",
-                                                "root", "root");
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/proyecto_final",
+                                                "tpv_app", "tpv_app_123");
         } catch (Exception e) {
             mensajeError();
             e.printStackTrace();

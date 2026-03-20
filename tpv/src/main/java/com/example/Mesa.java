@@ -14,9 +14,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 /**
  * Clase que representa una mesa en el sistema.
- * Permite la gestión de mesas en la base de datos.
+ * Permite la gestiÃ³n de mesas en la base de datos.
  * 
- * Una mesa tiene un identificador, nombre, número, capacidad y estado.
+ * Una mesa tiene un identificador, nombre, nÃºmero, capacidad y estado.
  * 
  * @author Castilla
  */
@@ -32,7 +32,7 @@ public class Mesa {
      * Crea una nueva mesa.
      * @param id Identificador de la mesa.
      * @param nombre Nombre de la mesa.
-     * @param numero Número de la mesa.
+     * @param numero NÃºmero de la mesa.
      * @param capacidad Capacidad de la mesa.
      * @param estado Estado de la mesa.
      */
@@ -62,7 +62,7 @@ public class Mesa {
 
     /**
      * Devuelve la propiedad numero.
-     * @return IntegerProperty del número.
+     * @return IntegerProperty del nÃºmero.
      */
     public IntegerProperty numeroProperty() {
         return numero;
@@ -117,16 +117,16 @@ public class Mesa {
     }
 
     /**
-     * Obtiene el número de la mesa.
-     * @return número de la mesa.
+     * Obtiene el nÃºmero de la mesa.
+     * @return nÃºmero de la mesa.
      */
     public int getNumero() {
         return numero.get();
     }
 
     /**
-     * Establece el número de la mesa.
-     * @param numero Nuevo número.
+     * Establece el nÃºmero de la mesa.
+     * @param numero Nuevo nÃºmero.
      */
     public void setNumero(int numero) {
         this.numero.set(numero);
@@ -189,8 +189,8 @@ public class Mesa {
     }
 
     /**
-     * Obtiene todas las mesas de la base de datos y las añade a la lista proporcionada.
-     * @param listaMesas Lista donde se añadirán las mesas.
+     * Obtiene todas las mesas de la base de datos y las aÃ±ade a la lista proporcionada.
+     * @param listaMesas Lista donde se aÃ±adirÃ¡n las mesas.
      */
     public static void getAll(ObservableList<Mesa> listaMesas) {
         try {
@@ -246,8 +246,8 @@ public class Mesa {
     }
 
     /**
-     * Obtiene el último id registrado en la tabla mesa.
-     * @return Último id o 0 si no hay registros.
+     * Obtiene el Ãºltimo id registrado en la tabla mesa.
+     * @return Ãšltimo id o 0 si no hay registros.
      */
     public static int getLastId() {
         int lastId = 0;
@@ -271,7 +271,7 @@ public class Mesa {
     /**
      * Guarda la mesa en la base de datos.
      * Si existe, la actualiza; si no, la inserta.
-     * @return Número de filas afectadas.
+     * @return NÃºmero de filas afectadas.
      */
     public int save() {
         int filasAfectadas = 0;
@@ -289,7 +289,7 @@ public class Mesa {
                     "' WHERE id=" + this.getId()
                 );
             } else {
-                // Si la mesa no existe, la añadimos
+                // Si la mesa no existe, la aÃ±adimos
                 filasAfectadas = st.executeUpdate(
                     "INSERT INTO mesa (nombre, numero, capacidad, estado) VALUES ('" +
                     this.getNombre() + "', " +
@@ -309,7 +309,7 @@ public class Mesa {
 
     /**
      * Elimina la mesa de la base de datos.
-     * @return Número de filas afectadas.
+     * @return NÃºmero de filas afectadas.
      */
     public int delete() {
         int filasAfectadas = 0;
@@ -326,7 +326,7 @@ public class Mesa {
     }
 
     /**
-     * Muestra un mensaje de error genérico.
+     * Muestra un mensaje de error genÃ©rico.
      */
     public static void mensajeError() {
         Alert alert = new Alert(AlertType.ERROR);
@@ -335,14 +335,14 @@ public class Mesa {
     }
 
     /**
-     * Obtiene una conexión a la base de datos.
-     * @return Objeto Connection o null si falla la conexión.
+     * Obtiene una conexiÃ³n a la base de datos.
+     * @return Objeto Connection o null si falla la conexiÃ³n.
      */
     public static Connection getConnection() {
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto_final",
-                                                "root", "root");
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/proyecto_final",
+                                                "tpv_app", "tpv_app_123");
         } catch (Exception e) {
             mensajeError();
             e.printStackTrace();

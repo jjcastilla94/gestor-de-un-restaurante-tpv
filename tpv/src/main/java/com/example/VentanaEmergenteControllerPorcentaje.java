@@ -21,7 +21,7 @@ public class VentanaEmergenteControllerPorcentaje {
     private PrimaryController controladorPrincipal;
 
     /**
-     * Establece el controlador principal para poder actualizar la vista principal tras añadir un producto.
+     * Establece el controlador principal para poder actualizar la vista principal tras aÃ±adir un producto.
      * @param controladorPrincipal Controlador principal.
      */
     public void setControladorPrincipal(PrimaryController controladorPrincipal) {
@@ -41,7 +41,7 @@ public class VentanaEmergenteControllerPorcentaje {
     @FXML
     private void initialize() {
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto_final", "root", "root");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/proyecto_final", "tpv_app", "tpv_app_123");
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT id, nombre FROM descuento");
 
@@ -55,12 +55,12 @@ public class VentanaEmergenteControllerPorcentaje {
             e.printStackTrace();
         }
 
-        // Añadir listener al campo de texto para actualizar los datos al cambiar el valor
+        // AÃ±adir listener al campo de texto para actualizar los datos al cambiar el valor
         txtCantidad.textProperty().addListener((observable, oldValue, newValue) -> {
             actualizarDatos();
         });
 
-        // Añadir listener al choice box para actualizar los datos al cambiar el valor
+        // AÃ±adir listener al choice box para actualizar los datos al cambiar el valor
         choice_box_descuento.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             actualizarDatos();
         });
@@ -79,14 +79,14 @@ public class VentanaEmergenteControllerPorcentaje {
         //este metodo actualiza los datos de la ventana emergente
         String cantidadTexto = txtCantidad.getText();
         if (cantidadTexto.isEmpty() || cantidadTexto.equals("0")) {
-            // Si el campo de cantidad está vacío, muestra 0 en los labels
-            lblCantidad.setText("0.00€");
-            lblTotalConDescuento.setText(cuentaOriginal + "€");
+            // Si el campo de cantidad estÃ¡ vacÃ­o, muestra 0 en los labels
+            lblCantidad.setText("0.00â‚¬");
+            lblTotalConDescuento.setText(cuentaOriginal + "â‚¬");
         }
         else {
            
             try {
-                // Segun el tipo de descuento seleccionado, se aplicará un descuento diferente
+                // Segun el tipo de descuento seleccionado, se aplicarÃ¡ un descuento diferente
                 String tipoDescuento = choice_box_descuento.getValue();
                 
                 // Si el descuento es un porcentaje
@@ -95,14 +95,14 @@ public class VentanaEmergenteControllerPorcentaje {
                     double porcentaje = Double.parseDouble(cantidadTexto);
                     if (porcentaje < 1 || porcentaje > 99) {
                         mostrarAlerta("Error", "El porcentaje debe estar entre 1 y 99.");
-                        lblCantidad.setText("0.00€");
-                        lblTotalConDescuento.setText(String.format("%.2f€", cuentaOriginal));
+                        lblCantidad.setText("0.00â‚¬");
+                        lblTotalConDescuento.setText(String.format("%.2fâ‚¬", cuentaOriginal));
                         return;
                     }
                     double descuento = cuentaOriginal * (porcentaje / 100);
                     double totalConDescuento = cuentaOriginal - descuento;
-                    lblCantidad.setText(String.format("%.2f€", descuento));
-                    lblTotalConDescuento.setText(String.format("%.2f€", totalConDescuento));
+                    lblCantidad.setText(String.format("%.2fâ‚¬", descuento));
+                    lblTotalConDescuento.setText(String.format("%.2fâ‚¬", totalConDescuento));
 
                 } else if(tipoDescuento != null && tipoDescuento.equals("Cantidad Fija")) { 
                     // Si el descuento es un valor fijo
@@ -110,16 +110,16 @@ public class VentanaEmergenteControllerPorcentaje {
                     double totalConDescuento = cuentaOriginal - cantidad;
                     if (totalConDescuento < 0) {
                         mostrarAlerta("Error", "El descuento no puede superar el total original.");
-                        lblCantidad.setText("0.00€");
-                        lblTotalConDescuento.setText(String.format("%.2f€", cuentaOriginal));
+                        lblCantidad.setText("0.00â‚¬");
+                        lblTotalConDescuento.setText(String.format("%.2fâ‚¬", cuentaOriginal));
                         return;
                     }
-                    lblCantidad.setText(String.format("%.2f€", cantidad));
-                    lblTotalConDescuento.setText(String.format("%.2f€", totalConDescuento));
+                    lblCantidad.setText(String.format("%.2fâ‚¬", cantidad));
+                    lblTotalConDescuento.setText(String.format("%.2fâ‚¬", totalConDescuento));
                 }
                 
             } catch (NumberFormatException e) {
-                mostrarAlerta("Error", "La cantidad introducida no es válida.");
+                mostrarAlerta("Error", "La cantidad introducida no es vÃ¡lida.");
             } 
         }
        
@@ -129,10 +129,10 @@ public class VentanaEmergenteControllerPorcentaje {
 
     @FXML
     private void aplicarDescuento() {
-       // Una vez que se ha validado el descuento en el método actualizarDatos(), se puede aplicar el descuento
+       // Una vez que se ha validado el descuento en el mÃ©todo actualizarDatos(), se puede aplicar el descuento
         String cantidadTexto = txtCantidad.getText();
         if (cantidadTexto.isEmpty() || cantidadTexto.equals("0")) {
-            mostrarAlerta("Error", "Por favor, introduzca una cantidad válida.");
+            mostrarAlerta("Error", "Por favor, introduzca una cantidad vÃ¡lida.");
             return;
         }
 
@@ -142,7 +142,7 @@ public class VentanaEmergenteControllerPorcentaje {
             return;
         }
 
-        // Aquí puedes aplicar el descuento a la cuenta original si es por porcentaje
+        // AquÃ­ puedes aplicar el descuento a la cuenta original si es por porcentaje
         double cantidad = Double.parseDouble(cantidadTexto);
         double totalConDescuento = 0.0;
         if (tipoDescuento.equals("Porcentaje")) {
@@ -163,8 +163,8 @@ public class VentanaEmergenteControllerPorcentaje {
     }
 
     /**
-     * Muestra una alerta de error con el título y mensaje proporcionados.
-     * @param titulo Título de la alerta.
+     * Muestra una alerta de error con el tÃ­tulo y mensaje proporcionados.
+     * @param titulo TÃ­tulo de la alerta.
      * @param mensaje Mensaje de la alerta.
      */
     private void mostrarAlerta(String titulo, String mensaje) {

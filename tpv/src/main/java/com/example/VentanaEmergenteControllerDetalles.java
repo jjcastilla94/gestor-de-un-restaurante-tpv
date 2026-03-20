@@ -31,7 +31,7 @@ public class VentanaEmergenteControllerDetalles {
     @FXML private TableColumn<Ticket, String> colEmpleado;
 
     /**
-     * Establece el controlador principal para poder actualizar la vista principal tras añadir un producto.
+     * Establece el controlador principal para poder actualizar la vista principal tras aÃ±adir un producto.
      * @param controladorPrincipal Controlador principal.
      */
     public void setControladorPrincipal(PrimaryController controladorPrincipal) {
@@ -86,7 +86,7 @@ public class VentanaEmergenteControllerDetalles {
     public void cargarTickets() {
         listaTickets.clear();
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto_final", "root", "root");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/proyecto_final", "tpv_app", "tpv_app_123");
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM ticket ");
 
@@ -105,14 +105,14 @@ public class VentanaEmergenteControllerDetalles {
 
     /**
      * Elimina el ticket seleccionado de la tabla y de la base de datos.
-     * Muestra una alerta si no hay ningún ticket seleccionado.
+     * Muestra una alerta si no hay ningÃºn ticket seleccionado.
      */
     @FXML
     public void quitarTicket() {
         Ticket ticketSeleccionado = tablaTickets.getSelectionModel().getSelectedItem();
         if (ticketSeleccionado != null) {
             try {
-                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto_final", "root", "root");
+                Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/proyecto_final", "tpv_app", "tpv_app_123");
                 String sql = "DELETE FROM ticket WHERE id = ?";
                 PreparedStatement pstmt = conn.prepareStatement(sql);
                 pstmt.setInt(1, ticketSeleccionado.getId());
@@ -131,14 +131,14 @@ public class VentanaEmergenteControllerDetalles {
     }
 
     /**
-     * Devuelve el nombre del método de pago dado su ID.
-     * @param idMetodoPago ID del método de pago.
-     * @return Nombre del método de pago.
+     * Devuelve el nombre del mÃ©todo de pago dado su ID.
+     * @param idMetodoPago ID del mÃ©todo de pago.
+     * @return Nombre del mÃ©todo de pago.
      */
     private String obtenerNombreMetodoPagoPorId(int idMetodoPago) {
         String nombreMetodoPago = null;
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto_final", "root", "root");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/proyecto_final", "tpv_app", "tpv_app_123");
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT nombre FROM metodo_pago WHERE id = " + idMetodoPago);
 
@@ -160,7 +160,7 @@ public class VentanaEmergenteControllerDetalles {
     private String obtenerNombreMesaPorId(int idMesa) {
         String nombreMesa = null;
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto_final", "root", "root");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/proyecto_final", "tpv_app", "tpv_app_123");
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT nombre FROM mesa WHERE id = " + idMesa);
 
@@ -182,7 +182,7 @@ public class VentanaEmergenteControllerDetalles {
     private String obtenerNombreEmpleadoPorId(int idEmpleado) {
         String nombreEmpleado = null;
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto_final", "root", "root");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/proyecto_final", "tpv_app", "tpv_app_123");
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT nombre FROM empleado WHERE id = " + idEmpleado);
 
@@ -197,8 +197,8 @@ public class VentanaEmergenteControllerDetalles {
     }
 
     /**
-     * Muestra una alerta de error con el título y mensaje proporcionados.
-     * @param titulo Título de la alerta.
+     * Muestra una alerta de error con el tÃ­tulo y mensaje proporcionados.
+     * @param titulo TÃ­tulo de la alerta.
      * @param mensaje Mensaje de la alerta.
      */
     private void mostrarAlerta(String titulo, String mensaje) {

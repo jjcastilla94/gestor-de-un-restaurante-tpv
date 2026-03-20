@@ -14,9 +14,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 /**
  * Clase que representa una comanda (los tickets) en el sistema.
- * Permite la gestión de comandas en la base de datos.
+ * Permite la gestiÃ³n de comandas en la base de datos.
  * 
- * Una comanda está asociada a un producto, una mesa, un precio total y una cantidad.
+ * Una comanda estÃ¡ asociada a un producto, una mesa, un precio total y una cantidad.
  * 
  * @author Castilla
  */
@@ -137,8 +137,8 @@ public class Comanda {
     }
 
     /**
-     * Obtiene todas las comandas de la base de datos y las añade a la lista proporcionada.
-     * @param listaComandas Lista donde se añadirán las comandas.
+     * Obtiene todas las comandas de la base de datos y las aÃ±ade a la lista proporcionada.
+     * @param listaComandas Lista donde se aÃ±adirÃ¡n las comandas.
      */
     public static void getAll(ObservableList<Comanda> listaComandas) {
         try {
@@ -164,7 +164,7 @@ public class Comanda {
 
     /**
      * Guarda la comanda en la base de datos.
-     * @return true si la operación fue exitosa, false en caso contrario.
+     * @return true si la operaciÃ³n fue exitosa, false en caso contrario.
      */
     public boolean save() {
         boolean exito = true;
@@ -184,9 +184,9 @@ public class Comanda {
     }
 
     /**
-     * Elimina la comanda de la base de datos según el id del producto.
+     * Elimina la comanda de la base de datos segÃºn el id del producto.
      * @param id id del producto de la comanda a eliminar.
-     * @return true si la operación fue exitosa, false en caso contrario.
+     * @return true si la operaciÃ³n fue exitosa, false en caso contrario.
      */
     public boolean delete(int id) {
         boolean exito = true;
@@ -205,7 +205,7 @@ public class Comanda {
     }
 
     /**
-     * Muestra un mensaje de error genérico.
+     * Muestra un mensaje de error genÃ©rico.
      */
     public static void mensajeError() {
         Alert alert = new Alert(AlertType.ERROR);
@@ -214,14 +214,14 @@ public class Comanda {
     }
 
     /**
-     * Obtiene una conexión a la base de datos.
-     * @return Objeto Connection o null si falla la conexión.
+     * Obtiene una conexiÃ³n a la base de datos.
+     * @return Objeto Connection o null si falla la conexiÃ³n.
      */
     public static Connection getConnection() {
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto_final",
-                                                "root", "root");
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/proyecto_final",
+                                                "tpv_app", "tpv_app_123");
         } catch (Exception e) {
             mensajeError();
             e.printStackTrace();

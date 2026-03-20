@@ -2,6 +2,11 @@ DROP DATABASE IF EXISTS proyecto_final;
 CREATE DATABASE proyecto_final CHARACTER SET utf8mb4;
 USE proyecto_final;
 
+DROP USER IF EXISTS 'tpv_app'@'%';
+CREATE USER 'tpv_app'@'%' IDENTIFIED WITH caching_sha2_password BY 'tpv_app_123';
+GRANT ALL PRIVILEGES ON proyecto_final.* TO 'tpv_app'@'%';
+FLUSH PRIVILEGES;
+
 -- Tabla empleado
 CREATE TABLE empleado (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,

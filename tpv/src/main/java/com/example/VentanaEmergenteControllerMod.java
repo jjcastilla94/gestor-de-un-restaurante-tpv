@@ -18,10 +18,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Controlador para la ventana emergente de modificación de producto.
+ * Controlador para la ventana emergente de modificaciÃ³n de producto.
  * Permite modificar los datos de un producto existente en la base de datos.
  * 
- * Gestiona la carga de categorías, la selección de imagen, la validación de datos y la actualización del producto.
+ * Gestiona la carga de categorÃ­as, la selecciÃ³n de imagen, la validaciÃ³n de datos y la actualizaciÃ³n del producto.
  * 
  * @author Castilla
  */
@@ -59,7 +59,7 @@ public class VentanaEmergenteControllerMod {
             }
         }
 
-        // Seleccionar la categoría en el ChoiceBox
+        // Seleccionar la categorÃ­a en el ChoiceBox
         if (producto.getIdCategoria() != 0 && choice_box_categoria != null) {
             for (Map.Entry<String, Integer> entry : categoriaNombreToId.entrySet()) {
                 if (entry.getValue().equals(producto.getIdCategoria())) {
@@ -78,12 +78,12 @@ public class VentanaEmergenteControllerMod {
     private Map<String, Integer> categoriaNombreToId = new HashMap<>();
 
     /**
-     * Inicializa la ventana emergente, cargando las categorías desde la base de datos.
+     * Inicializa la ventana emergente, cargando las categorÃ­as desde la base de datos.
      */
     @FXML
     private void initialize() {
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto_final", "root", "root");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/proyecto_final", "tpv_app", "tpv_app_123");
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT id, nombre FROM categoria");
 
@@ -100,14 +100,14 @@ public class VentanaEmergenteControllerMod {
 
     /**
      * Abre un selector de archivos para elegir una imagen y la muestra como fondo en el componente.
-     * @param event Evento de ratón.
+     * @param event Evento de ratÃ³n.
      */
     @FXML 
     private void seleccionarImagen(MouseEvent event) {
         // Obtener la ruta absoluta de la carpeta "images" dentro de resources
         File initialDirectory;
         try {
-            // Busca la carpeta "images" dentro de resources, independientemente de dónde se ejecute el jar/proyecto
+            // Busca la carpeta "images" dentro de resources, independientemente de dÃ³nde se ejecute el jar/proyecto
             initialDirectory = new File(getClass().getResource("/com/example/images").toURI());
         } catch (Exception e) {
             // Si no se encuentra, usar una ruta relativa como fallback
@@ -117,7 +117,7 @@ public class VentanaEmergenteControllerMod {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleccionar Imagen");
         fileChooser.getExtensionFilters().addAll(
-            new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg")
+            new FileChooser.ExtensionFilter("ImÃ¡genes", "*.png", "*.jpg", "*.jpeg")
         );
         if (initialDirectory.exists()) {
             fileChooser.setInitialDirectory(initialDirectory);
@@ -125,7 +125,7 @@ public class VentanaEmergenteControllerMod {
 
         File selectedFile = fileChooser.showOpenDialog(customFileUpload.getScene().getWindow());
         if (selectedFile != null) {
-            // Solo guardar el nombre y la extensión del archivo
+            // Solo guardar el nombre y la extensiÃ³n del archivo
             rutaImagenSeleccionada = selectedFile.getName();
 
             // Cambiar el estilo del componente para indicar que se ha seleccionado un archivo 
@@ -135,7 +135,7 @@ public class VentanaEmergenteControllerMod {
 
     /**
      * Modifica el producto existente en la base de datos tras validar los campos.
-     * Muestra alertas si hay errores o si la modificación es exitosa.
+     * Muestra alertas si hay errores o si la modificaciÃ³n es exitosa.
      */
     @FXML
     private void modificarProducto() {
@@ -144,7 +144,7 @@ public class VentanaEmergenteControllerMod {
         String fotografia = rutaImagenSeleccionada;
         String nombreCategoriaSeleccionada = choice_box_categoria.getValue();
 
-        // Obtener el id real de la categoría seleccionada
+        // Obtener el id real de la categorÃ­a seleccionada
         Integer idCategoria = categoriaNombreToId.get(nombreCategoriaSeleccionada);
 
         try {
@@ -161,9 +161,9 @@ public class VentanaEmergenteControllerMod {
             int idMesa = controladorPrincipal.getIdMesa(); 
             controladorPrincipal.cargarComandasDesdeBaseDeDatos(idMesa);
 
-            // Mostrar un mensaje de éxito
+            // Mostrar un mensaje de Ã©xito
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Éxito");
+            alert.setTitle("Ã‰xito");
             alert.setHeaderText(null);
             alert.setContentText("Producto modificado correctamente.");
             alert.showAndWait();
@@ -179,8 +179,8 @@ public class VentanaEmergenteControllerMod {
     }
 
     /**
-     * Muestra una alerta de error con el título y mensaje proporcionados.
-     * @param titulo Título de la alerta.
+     * Muestra una alerta de error con el tÃ­tulo y mensaje proporcionados.
+     * @param titulo TÃ­tulo de la alerta.
      * @param mensaje Mensaje de la alerta.
      */
     private void mostrarAlerta(String titulo, String mensaje) {

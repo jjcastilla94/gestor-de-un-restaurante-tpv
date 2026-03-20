@@ -18,7 +18,7 @@ public class VentanaEmergenteControllerCobrar {
     private PrimaryController controladorPrincipal;
 
     /**
-     * Establece el controlador principal para poder actualizar la vista principal tras añadir un producto.
+     * Establece el controlador principal para poder actualizar la vista principal tras aÃ±adir un producto.
      * @param controladorPrincipal Controlador principal.
      */
     public void setControladorPrincipal(PrimaryController controladorPrincipal) {
@@ -36,7 +36,7 @@ public class VentanaEmergenteControllerCobrar {
     @FXML
     private void initialize() {
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto_final", "root", "root");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/proyecto_final", "tpv_app", "tpv_app_123");
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT id, nombre FROM metodo_pago");
 
@@ -50,9 +50,9 @@ public class VentanaEmergenteControllerCobrar {
             e.printStackTrace();
         }
 
-        // Añadir listener al choice box para actualizar los datos al cambiar el valor
+        // AÃ±adir listener al choice box para actualizar los datos al cambiar el valor
         choice_box_metodo_pago.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            // Aquí puedes manejar el evento de selección del choice box
+            // AquÃ­ puedes manejar el evento de selecciÃ³n del choice box
             actualizarDatos();
         });
 
@@ -74,10 +74,10 @@ public class VentanaEmergenteControllerCobrar {
 
     @FXML
     private void cobrar() {
-        // Este método se llama al hacer clic en el botón "Cobrar"
+        // Este mÃ©todo se llama al hacer clic en el botÃ³n "Cobrar"
         String metodoPagoSeleccionado = choice_box_metodo_pago.getSelectionModel().getSelectedItem();
         if (metodoPagoSeleccionado == null) {
-            mostrarAlerta("Error", "Por favor, seleccione un método de pago.");
+            mostrarAlerta("Error", "Por favor, seleccione un mÃ©todo de pago.");
             return;
         }
         int idMetodoPago = metodo_pagoNombreToId.get(metodoPagoSeleccionado);
@@ -93,8 +93,8 @@ public class VentanaEmergenteControllerCobrar {
     
 
     /**
-     * Muestra una alerta de error con el título y mensaje proporcionados.
-     * @param titulo Título de la alerta.
+     * Muestra una alerta de error con el tÃ­tulo y mensaje proporcionados.
+     * @param titulo TÃ­tulo de la alerta.
      * @param mensaje Mensaje de la alerta.
      */
     private void mostrarAlerta(String titulo, String mensaje) {

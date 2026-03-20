@@ -14,9 +14,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 /**
  * Clase que representa un producto en el sistema.
- * Permite la gestión de productos en la base de datos.
+ * Permite la gestiÃ³n de productos en la base de datos.
  * 
- * Un producto tiene un identificador, nombre, precio, imagen y categoría.
+ * Un producto tiene un identificador, nombre, precio, imagen y categorÃ­a.
  * 
  * @author Castilla
  */
@@ -33,7 +33,7 @@ public class Producto {
      * @param nombre Nombre del producto.
      * @param precio Precio del producto.
      * @param imagen Ruta o nombre de la imagen del producto.
-     * @param id_categoria Identificador de la categoría del producto.
+     * @param id_categoria Identificador de la categorÃ­a del producto.
      */
     public Producto(int id, String nombre, String precio, String imagen, int id_categoria) {
         this.id = new SimpleIntegerProperty(id);
@@ -150,24 +150,24 @@ public class Producto {
     }
 
     /**
-     * Obtiene el id de la categoría del producto.
-     * @return id de la categoría.
+     * Obtiene el id de la categorÃ­a del producto.
+     * @return id de la categorÃ­a.
      */
     public int getIdCategoria() {
         return id_categoria.get();
     }
 
     /**
-     * Establece el id de la categoría del producto.
-     * @param id_categoria Nuevo id de la categoría.
+     * Establece el id de la categorÃ­a del producto.
+     * @param id_categoria Nuevo id de la categorÃ­a.
      */
     public void setIdCategoria(int id_categoria) {
         this.id_categoria.set(id_categoria);
     }
 
     /**
-     * Obtiene todos los productos de la base de datos y los añade a la lista proporcionada.
-     * @param listaProductos Lista donde se añadirán los productos.
+     * Obtiene todos los productos de la base de datos y los aÃ±ade a la lista proporcionada.
+     * @param listaProductos Lista donde se aÃ±adirÃ¡n los productos.
      */
     public static void getAll(ObservableList<Producto> listaProductos) {
         try {
@@ -221,9 +221,9 @@ public class Producto {
     }
 
     /**
-     * Busca productos por nombre y los añade a la lista proporcionada.
+     * Busca productos por nombre y los aÃ±ade a la lista proporcionada.
      * @param txt Texto a buscar en el nombre.
-     * @param listaProductos Lista donde se añadirán los productos encontrados.
+     * @param listaProductos Lista donde se aÃ±adirÃ¡n los productos encontrados.
      */
     public static void get(String txt, ObservableList<Producto> listaProductos) {
         try {
@@ -250,8 +250,8 @@ public class Producto {
     }
 
     /**
-     * Obtiene el último id registrado en la tabla producto.
-     * @return Último id o 0 si no hay registros.
+     * Obtiene el Ãºltimo id registrado en la tabla producto.
+     * @return Ãšltimo id o 0 si no hay registros.
      */
     public static int getLastId() {
         int lastId = 0;
@@ -275,7 +275,7 @@ public class Producto {
     /**
      * Guarda el producto en la base de datos.
      * Si existe, lo actualiza; si no, lo inserta.
-     * @return Número de filas afectadas.
+     * @return NÃºmero de filas afectadas.
      */
     public int save() {
         int filasAfectadas = 0;
@@ -293,7 +293,7 @@ public class Producto {
                     " WHERE id=" + this.getId()
                 );
             } else {
-                // Si el producto no existe, lo añadimos
+                // Si el producto no existe, lo aÃ±adimos
                 filasAfectadas = st.executeUpdate(
                     "INSERT INTO producto (nombre, precio, imagen, id_categoria) VALUES ('" +
                     this.getNombre() + "', '" +
@@ -312,7 +312,7 @@ public class Producto {
 
     /**
      * Elimina el producto de la base de datos.
-     * @return Número de filas afectadas.
+     * @return NÃºmero de filas afectadas.
      */
     public int delete() {
         int filasAfectadas = 0;
@@ -329,7 +329,7 @@ public class Producto {
     }
 
     /**
-     * Muestra un mensaje de error genérico.
+     * Muestra un mensaje de error genÃ©rico.
      */
     public static void mensajeError() {
         Alert alert = new Alert(AlertType.ERROR);
@@ -338,14 +338,14 @@ public class Producto {
     }
 
     /**
-     * Obtiene una conexión a la base de datos.
-     * @return Objeto Connection o null si falla la conexión.
+     * Obtiene una conexiÃ³n a la base de datos.
+     * @return Objeto Connection o null si falla la conexiÃ³n.
      */
     public static Connection getConnection() {
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto_final",
-                                                "root", "root");
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/proyecto_final",
+                                                "tpv_app", "tpv_app_123");
         } catch (Exception e) {
             mensajeError();
             e.printStackTrace();

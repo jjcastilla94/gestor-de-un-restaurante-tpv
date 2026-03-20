@@ -27,10 +27,10 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Controlador para la pantalla de inicio de sesión y registro.
- * Gestiona la lógica de login, registro y cambio de vistas entre ambas.
+ * Controlador para la pantalla de inicio de sesiÃ³n y registro.
+ * Gestiona la lÃ³gica de login, registro y cambio de vistas entre ambas.
  * 
- * Permite iniciar sesión, registrar nuevos empleados y obtener el usuario actual.
+ * Permite iniciar sesiÃ³n, registrar nuevos empleados y obtener el usuario actual.
  * 
  * @author Castilla
  */
@@ -55,12 +55,12 @@ public class LoginController implements Initializable {
 
     /**
      * Inicializa la vista, mostrando por defecto la pantalla de login.
-     * @param url URL de inicialización.
-     * @param resourceBundle Recursos de inicialización.
+     * @param url URL de inicializaciÃ³n.
+     * @param resourceBundle Recursos de inicializaciÃ³n.
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Configuración inicial - por defecto muestra la pantalla de login
+        // ConfiguraciÃ³n inicial - por defecto muestra la pantalla de login
         selectionIndicator.setTranslateX(0);
         loginPane.setVisible(true);
         signupPane.setVisible(false);
@@ -68,8 +68,8 @@ public class LoginController implements Initializable {
     }
 
     /**
-     * Cambia la vista a la pestaña de login.
-     * @param event Evento de acción.
+     * Cambia la vista a la pestaÃ±a de login.
+     * @param event Evento de acciÃ³n.
      */
     @FXML
     public void switchToLogin(ActionEvent event) {
@@ -86,8 +86,8 @@ public class LoginController implements Initializable {
     }
 
     /**
-     * Cambia la vista a la pestaña de registro.
-     * @param event Evento de acción.
+     * Cambia la vista a la pestaÃ±a de registro.
+     * @param event Evento de acciÃ³n.
      */
     @FXML
     public void switchToSignup(ActionEvent event) {
@@ -104,7 +104,7 @@ public class LoginController implements Initializable {
     }
 
     /**
-     * Actualiza el estilo visual de los botones de pestaña según la vista activa.
+     * Actualiza el estilo visual de los botones de pestaÃ±a segÃºn la vista activa.
      */
     private void updateTabButtonsStyle() {
         if (isLoginView) {
@@ -117,16 +117,16 @@ public class LoginController implements Initializable {
     }
 
     /**
-     * Maneja el evento de inicio de sesión.
-     * Valida los campos, consulta la base de datos y realiza la transición a la pantalla principal si es correcto.
-     * @param event Evento de acción.
+     * Maneja el evento de inicio de sesiÃ³n.
+     * Valida los campos, consulta la base de datos y realiza la transiciÃ³n a la pantalla principal si es correcto.
+     * @param event Evento de acciÃ³n.
      */
     @FXML
     public void handleLogin(ActionEvent event) {
         String username = loginUsername.getText();
         String password = loginPassword.getText();
 
-        // Validación básica
+        // ValidaciÃ³n bÃ¡sica
         if (username.isEmpty() || password.isEmpty()) {
             loginInfo.setText("Por favor, completa todos los campos");
             loginUsername.clear();
@@ -136,6 +136,10 @@ public class LoginController implements Initializable {
 
         try {
             Connection conn = getConnection();
+            if (conn == null) {
+                loginInfo.setText("No se pudo conectar a la base de datos");
+                return;
+            }
             Statement stmt = conn.createStatement();
             String sql = "SELECT nombre, pass FROM empleado WHERE nombre = '" + username + "' AND pass = '" + password + "'";
             ResultSet rs = stmt.executeQuery(sql);
@@ -149,7 +153,7 @@ public class LoginController implements Initializable {
                 // Mostrar barra de progreso
                 loginProgressBar.setVisible(true);
                 loginProgressBar.setDisable(false);
-                loginInfo.setText("Iniciando sesión...");
+                loginInfo.setText("Iniciando sesiÃ³n...");
 
                 Scene scene = loginProgressBar.getScene();
                 if (scene != null) {
@@ -182,13 +186,13 @@ public class LoginController implements Initializable {
                 }).start();
 
             } else {
-                loginInfo.setText("Empleado o contraseña incorrectos");
+                loginInfo.setText("Empleado o contraseÃ±a incorrectos");
                 loginUsername.clear();
                 loginPassword.clear();
             }
 
         } catch (Exception e) {
-            loginInfo.setText("Error en la conexión a la base de datos");
+            loginInfo.setText("Error en la conexiÃ³n a la base de datos");
             e.printStackTrace();
             return;
         }
@@ -197,7 +201,7 @@ public class LoginController implements Initializable {
     /**
      * Maneja el evento de registro de un nuevo empleado.
      * Valida los campos, comprueba duplicados y registra el usuario en la base de datos.
-     * @param event Evento de acción.
+     * @param event Evento de acciÃ³n.
      */
     @FXML
     public void handleSignup(ActionEvent event) {
@@ -205,33 +209,37 @@ public class LoginController implements Initializable {
         String email = signupEmail.getText();
         String password = signupPassword.getText();
 
-        // Validación básica
+        // ValidaciÃ³n bÃ¡sica
         if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
             signupInfo.setText("Por favor, completa todos los campos");
             return;
         }
 
-        // Validación simple de email
+        // ValidaciÃ³n simple de email
         if (!email.contains("@") || !email.contains(".")) {
-            signupInfo.setText("Por favor, ingresa un email válido");
+            signupInfo.setText("Por favor, ingresa un email vÃ¡lido");
             return;
         }
 
-        // Validación simple de contraseña
+        // ValidaciÃ³n simple de contraseÃ±a
         if (password.length() < 6) {
-            signupInfo.setText("La contraseña debe tener al menos 6 caracteres");
+            signupInfo.setText("La contraseÃ±a debe tener al menos 6 caracteres");
             return;
         }
 
         try {
             Connection conn = getConnection();
+            if (conn == null) {
+                signupInfo.setText("No se pudo conectar a la base de datos");
+                return;
+            }
             Statement stmt = conn.createStatement();
             String sql = "INSERT INTO empleado (nombre, pass, email) VALUES ('" + username + "', '" + password + "', '" + email + "')";
 
-            //Si el email ya existe en la base de datos, no se permite la inserción
+            //Si el email ya existe en la base de datos, no se permite la inserciÃ³n
             ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM empleado WHERE email='" + email + "'");
             if (rs.next()) {
-                signupInfo.setText("El email ya está registrado");
+                signupInfo.setText("El email ya estÃ¡ registrado");
                 return;
             }
 
@@ -262,7 +270,7 @@ public class LoginController implements Initializable {
 
                 signupProgressBar.setVisible(false);
                 Platform.runLater(() -> {
-                    signupInfo.setText("¡Empleado registrado!");
+                    signupInfo.setText("Â¡Empleado registrado!");
                 });
 
                 CompletableFuture.delayedExecutor(2, TimeUnit.SECONDS).execute(() -> switchToLogin(null));
@@ -276,7 +284,7 @@ public class LoginController implements Initializable {
     }
 
     /**
-     * Obtiene el nombre del usuario actual que ha iniciado sesión.
+     * Obtiene el nombre del usuario actual que ha iniciado sesiÃ³n.
      * @return Nombre del usuario actual o "Empleado no encontrado" si no existe.
      */
     @FXML
@@ -302,14 +310,14 @@ public class LoginController implements Initializable {
     }
 
     /**
-     * Obtiene una conexión a la base de datos.
-     * @return Objeto Connection o null si falla la conexión.
+     * Obtiene una conexiÃ³n a la base de datos.
+     * @return Objeto Connection o null si falla la conexiÃ³n.
      */
     private Connection getConnection() {
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto_final",
-                                                "root", "root");
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/proyecto_final",
+                                                "tpv_app", "tpv_app_123");
         } catch (Exception e) {
             mostrarAlerta("Error", "No se pudo conectar a la base de datos");
             e.printStackTrace();
@@ -318,8 +326,8 @@ public class LoginController implements Initializable {
     }
 
     /**
-     * Muestra una alerta de error con el título y mensaje proporcionados.
-     * @param titulo Título de la alerta.
+     * Muestra una alerta de error con el tÃ­tulo y mensaje proporcionados.
+     * @param titulo TÃ­tulo de la alerta.
      * @param mensaje Mensaje de la alerta.
      */
     private void mostrarAlerta(String titulo, String mensaje) {
