@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=TPV
+Exec=tpv
+Icon=me.elordenador.tpv
+Terminal=false
+Categories=Utility;

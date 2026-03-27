@@ -4,8 +4,22 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import java.io.IOException;
+
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+
+import com.example.entity.Descuento;
+import com.example.entity.Empleado;
+import com.example.entity.MetodoPago;
+import com.example.entity.UsuarioActual;
+
 
 /**
  * Clase principal de la aplicaciÃ³n JavaFX.
@@ -15,6 +29,7 @@ import java.io.IOException;
  */
 public class App extends Application {
 
+    public static SessionFactory sessionFactory;
     /** Escena principal de la aplicaciÃ³n. */
     private static Scene scene;
     /** Escenario principal de la aplicaciÃ³n. */
@@ -29,6 +44,8 @@ public class App extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
+
+        setupDB();
         primaryStage = stage; // Guardamos la referencia al escenario principal
         // Creamos una Scene a partir de un archivo FXML y la mostramos en la ventana (stage)
         scene = new Scene(loadFXML("login.fxml"));
@@ -38,6 +55,28 @@ public class App extends Application {
         stage.show();
     }
 
+    public void setupDB() {
+        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().build();
+        try {
+            sessionFactory = new MetadataSources(registry)
+                .addAnnotatedClass(Empleado.class)
+                .addAnnotatedClass(UsuarioActual.class)
+                .addAnnotatedClass(com.example.entity.Mesa.class)
+                .addAnnotatedClass(com.example.entity.Categoria.class)
+                .addAnnotatedClass(com.example.entity.Descuento.class)
+                .addAnnotatedClass(com.example.entity.Producto.class)
+                .addAnnotatedClass(com.example.entity.Comanda.class)
+                .addAnnotatedClass(MetodoPago.class)
+                .addAnnotatedClass(com.example.entity.Ticket.class)
+                .buildMetadata()
+                .buildSessionFactory();
+        } catch (Exception e) {
+            StandardServiceRegistryBuilder.destroy(registry);
+            Alert alert = new Alert(AlertType.ERROR, e.getMessage(), ButtonType.OK);
+            alert.showAndWait();
+            System.exit(1);
+        }
+    }
     /**
      * Cambia la vista de la aplicaciÃ³n cargando un nuevo archivo FXML.
      * Puede ser llamado desde cualquier controlador.
