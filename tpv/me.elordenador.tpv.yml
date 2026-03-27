@@ -1,0 +1,31 @@
+app-id: me.elordenador.tpv
+runtime: org.freedesktop.Platform
+runtime-version: '25.08'
+sdk: org.freedesktop.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.openjdk25
+command: tpv
+
+modules:
+  - name: openjdk
+    buildsystem: simple
+    build-commands:
+      - /usr/lib/sdk/openjdk25/install.sh
+  
+  - name: mi-app-java
+    buildsystem: simple
+    build-commands:
+      - mkdir -p /app/bin /app/lib /app/share/applications
+      - cp -r bin/* /app/bin/
+      - cp -r lib/* /app/lib/
+
+      - install -Dm644 me.elordenador.tpv.desktop /app/share/applications/me.elordenador.tpv.desktop
+    sources:
+      - type: dir
+        path: target/dist/tpv
+      - type: file
+        path: me.elordenador.tpv.desktop
+
+finish-args:
+  - --socket=x11
+  - --filesystem=home

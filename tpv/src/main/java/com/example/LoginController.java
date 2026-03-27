@@ -7,10 +7,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
@@ -25,6 +27,11 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
+
+import org.hibernate.Session;
+
+import com.example.entity.Empleado;
+import org.hibernate.Transaction;
 
 /**
  * Controlador para la pantalla de inicio de sesiÃ³n y registro.
@@ -133,13 +140,43 @@ public class LoginController implements Initializable {
             loginPassword.clear();
             return;
         }
+        Session session = App.sessionFactory.openSession();
+        Empleado empleado = (Empleado) session.createQuery("FROM Empleado WHERE username = :u AND pass = :p")
+                .setParameter("u", username)
+                .setParameter("p", password)
+                .uniqueResult();
+        if (empleado == null) {
+            Alert alert = new Alert(AlertType.INFORMATION, "Las credenciales son incorrectas", ButtonType.OK);
+            alert.showAndWait();
+        } else {
+            Cached.actual = empleado;
+            try {
+                App.setRoot("primary.fxml");
+            } catch (IOException e) {
+                Alert alert = new Alert(AlertType.ERROR, e.getMessage(), ButtonType.OK);
+                e.printStackTrace();
+                alert.showAndWait();
+                return;
+            }
+            javafx.application.Platform.runLater(() -> {
+                App.getStage().setTitle("Ventana Principal");
+                App.getStage().setResizable(true);
+                App.getStage().setMaximized(true);
+            });
+        }
 
+
+
+        /*
         try {
             Connection conn = getConnection();
             if (conn == null) {
                 loginInfo.setText("No se pudo conectar a la base de datos");
                 return;
             }
+
+
+
             Statement stmt = conn.createStatement();
             String sql = "SELECT nombre, pass FROM empleado WHERE nombre = '" + username + "' AND pass = '" + password + "'";
             ResultSet rs = stmt.executeQuery(sql);
@@ -196,6 +233,8 @@ public class LoginController implements Initializable {
             e.printStackTrace();
             return;
         }
+
+             */
     }
 
     /**
@@ -226,61 +265,32 @@ public class LoginController implements Initializable {
             signupInfo.setText("La contraseÃ±a debe tener al menos 6 caracteres");
             return;
         }
+        try (Session session = App.sessionFactory.openSession()) {
 
-        try {
-            Connection conn = getConnection();
-            if (conn == null) {
-                signupInfo.setText("No se pudo conectar a la base de datos");
-                return;
-            }
-            Statement stmt = conn.createStatement();
-            String sql = "INSERT INTO empleado (nombre, pass, email) VALUES ('" + username + "', '" + password + "', '" + email + "')";
-
-            //Si el email ya existe en la base de datos, no se permite la inserciÃ³n
-            ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM empleado WHERE email='" + email + "'");
-            if (rs.next()) {
-                signupInfo.setText("El email ya estÃ¡ registrado");
+            Empleado empleado = session.createQuery("FROM Empleado WHERE username = :username", Empleado.class)
+                .setParameter("username", username)
+                .uniqueResult();
+            
+            if (empleado != null) {
+                signupInfo.setText("El email ya está registrado");
                 return;
             }
 
-            // Guardar el usuario en la base de datos 
-            stmt.executeUpdate(sql);
-            stmt.close();
-
-            // Mostrar barra de progreso
-            signupProgressBar.setVisible(true);
-            signupProgressBar.setDisable(false);
-            signupInfo.setText("Registrando empleado...");
-
-            Scene scene = signupProgressBar.getScene();
-            if (scene != null) {
-                scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-            }
-
-            new Thread(() -> {
-                for (int i = 0; i <= 100; i++) {
-                    final int progress = i;
-                    javafx.application.Platform.runLater(() -> signupProgressBar.setProgress(progress / 100.0));
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                signupProgressBar.setVisible(false);
-                Platform.runLater(() -> {
-                    signupInfo.setText("Â¡Empleado registrado!");
-                });
-
-                CompletableFuture.delayedExecutor(2, TimeUnit.SECONDS).execute(() -> switchToLogin(null));
-
-            }).start();
-
+            empleado = Empleado.builder().username(username).pass(password).email(email).build();
+            Transaction transaction = session.beginTransaction();
+            session.persist(empleado);
+            transaction.commit();
+            signupInfo.setText("Registro completado");
         } catch (Exception e) {
-            signupInfo.setText("Error en el proceso de registro");
+            signupInfo.setText("Fracaso");
             e.printStackTrace();
+            Alert alert = new Alert(AlertType.ERROR, e.getMessage(), ButtonType.OK);
+            alert.showAndWait();
+            
+            
         }
+
+        
     }
 
     /**
